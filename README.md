@@ -46,6 +46,7 @@ A execução 209 demonstrou a integração por arquivo com o painel. A execuçã
 - [Demonstração da automação](n8n/reencontro_demonstracao_automacao.json) — fluxo de demonstração da limpeza e classificação dos relatos.
 
 Para executar um fluxo, baixe o arquivo JSON, importe-o no editor do n8n e clique em **Execute**. No nó **Painel da triagem**, abra a aba **Tabela** para conferir o resultado.
+
 #Links
 
 Repositório da automação
