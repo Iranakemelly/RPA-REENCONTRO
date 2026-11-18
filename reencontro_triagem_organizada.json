@@ -1,0 +1,612 @@
+{
+  "name": "Reencontro — Triagem organizada",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "938e47d3-1805-44aa-bddd-073540bdfad9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"casos_validos\": [\n    \"SIM-001\", \"SIM-002\", \"SIM-003\", \"SIM-004\", \"SIM-005\",\n    \"SIM-006\", \"SIM-007\", \"SIM-008\", \"SIM-009\", \"SIM-010\",\n    \"SIM-011\", \"SIM-012\", \"SIM-013\", \"SIM-014\", \"SIM-015\",\n    \"SIM-016\", \"SIM-017\", \"SIM-018\", \"SIM-019\", \"SIM-020\",\n    \"SIM-021\", \"SIM-022\", \"SIM-023\", \"SIM-024\", \"SIM-025\",\n    \"SIM-026\", \"SIM-027\", \"SIM-028\", \"SIM-029\", \"SIM-030\",\n    \"SIM-031\", \"SIM-032\", \"SIM-033\", \"SIM-034\", \"SIM-035\",\n    \"SIM-036\", \"SIM-037\", \"SIM-038\", \"SIM-039\", \"SIM-040\",\n    \"SIM-041\", \"SIM-042\", \"SIM-043\", \"SIM-044\", \"SIM-045\",\n    \"SIM-046\", \"SIM-047\", \"SIM-048\", \"SIM-049\", \"SIM-050\",\n    \"SIM-051\", \"SIM-052\", \"SIM-053\", \"SIM-054\", \"SIM-055\",\n    \"SIM-056\", \"SIM-057\", \"SIM-058\", \"SIM-059\", \"SIM-060\",\n    \"SIM-061\", \"SIM-062\", \"SIM-063\", \"SIM-064\", \"SIM-065\",\n    \"SIM-066\", \"SIM-067\", \"SIM-068\", \"SIM-069\", \"SIM-070\",\n    \"SIM-071\", \"SIM-072\", \"SIM-073\", \"SIM-074\", \"SIM-075\",\n    \"SIM-076\", \"SIM-077\", \"SIM-078\", \"SIM-079\", \"SIM-080\",\n    \"SIM-081\", \"SIM-082\", \"SIM-083\", \"SIM-084\", \"SIM-085\",\n    \"SIM-086\", \"SIM-087\", \"SIM-088\", \"SIM-089\", \"SIM-090\",\n    \"SIM-091\", \"SIM-092\", \"SIM-093\", \"SIM-094\", \"SIM-095\",\n    \"SIM-096\", \"SIM-097\", \"SIM-098\", \"SIM-099\", \"SIM-100\"\n  ],\n \"relatos\": [\n  {\n    \"protocolo\": \"REL-001\",\n    \"codigo_caso\": \"SIM-001\",\n    \"descricao\": \"Relato fictício de avistamento na região central.\"\n  },\n  {\n    \"protocolo\": \"REL-002\",\n    \"codigo_caso\": \"SIM-002\",\n    \"descricao\": \"\"\n  },\n  {\n    \"protocolo\": \"REL-001\",\n    \"codigo_caso\": \"SIM-001\",\n    \"descricao\": \"Relato fictício de avistamento na região central.\"\n  },\n  {\n    \"protocolo\": \"REL-003\",\n    \"codigo_caso\": \"SIM-999\",\n    \"descricao\": \"Relato fictício recebido em um ponto de acolhimento.\"\n  }\n]\n}",
+        "options": {
+          "dotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d99debfb-c7c7-4deb-8d4f-da8a11f4d468",
+      "name": "Dados de entrada"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "relatos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        0
+      ],
+      "id": "3babf63c-3ad7-4394-8111-bb7a6c6c0dd6",
+      "name": "Separar relatos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "685cc629-61de-4d7b-9ad1-94c9defe66df",
+              "leftValue": "={{ String($json.descricao ?? '').trim().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "4898f4f4-f718-4cde-b81a-56de7bc1473d",
+              "leftValue": "={{ String($json.protocolo ?? '').trim().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "df631708-e3e1-49f5-b17a-105cebeaa638",
+              "leftValue": "={{ String($json.codigo_caso ?? '').trim().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "e70870a6-5618-455e-9465-aed0ee28db39",
+              "leftValue": "={{ $('Dados de entrada').first().json.casos_validos.includes(String($json.codigo_caso ?? '').trim()) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "c7750609-7793-43e6-8b63-01ac0439012d",
+      "name": "Validar relato"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9cc64fb7-4b2e-435d-8352-107934f819d1",
+              "name": "status",
+              "value": "Precisa de correção",
+              "type": "string"
+            },
+            {
+              "id": "5f169b3a-4def-4849-b192-7b9cd72009a9",
+              "name": "=motivo",
+              "value": "={{ [   !String($json.protocolo ?? '').trim() ? 'Protocolo não preenchido' : '',   !String($json.codigo_caso ?? '').trim() ? 'Código do caso não preenchido' : '',   !String($json.descricao ?? '').trim() ? 'Descrição não preenchida' : '',   String($json.codigo_caso ?? '').trim() && !$('Dados de entrada').first().json.casos_validos.includes(String($json.codigo_caso).trim()) ? 'Código do caso não encontrado na base' : '' ].filter(Boolean).join('; ') }}",
+              "type": "string"
+            },
+            {
+              "id": "ebbf2ca5-160c-42d4-b257-41ea2e8b942b",
+              "name": "=processado_em",
+              "value": "={{ $now.toISO()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "f9655897-fd62-454b-b615-f7343d0678c9",
+              "name": "execucao_id",
+              "value": "={{ String($execution.id) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1344,
+        176
+      ],
+      "id": "617c7f1b-d597-4e6e-8a00-1f7c8d00c113",
+      "name": "Marcar para correção"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "protocolo",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        -176
+      ],
+      "id": "88b7cfa8-7aa6-4378-8a1a-e703faae7ac6",
+      "name": "Remover protocolos duplicados"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "470de4f8-e575-4ae8-9f11-1430640fd025",
+              "name": "status",
+              "value": "Aguardando revisão humana",
+              "type": "string"
+            },
+            {
+              "id": "04207b92-2cfc-473f-8848-003f4ea8a7bb",
+              "name": "motivo",
+              "value": "Campos obrigatórios preenchidos, caso existente e protocolo único no lote",
+              "type": "string"
+            },
+            {
+              "id": "6d2c9b7a-6794-4c66-baa3-f78724265f2d",
+              "name": "=processado_em",
+              "value": "={{ $now.toISO()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "b58fda87-5cf3-46dd-ad33-2f9a6fe02bf1",
+              "name": "execucao_id",
+              "value": "={{ String($execution.id) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1344,
+        -176
+      ],
+      "id": "ffd30017-b794-4f4c-abbe-4bc3ccf4a2cd",
+      "name": "Marcar para revisão"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1568,
+        0
+      ],
+      "id": "64bb6154-3b12-4efe-a299-1b5dda97e8ca",
+      "name": "Reunir relatos classificados"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "resultado_reencontra.json"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2464,
+        -176
+      ],
+      "id": "e3bc02a5-f567-4b83-b7d8-0661733cb530",
+      "name": "Exportar resultados JSON"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "log_auditoria_reencontra.json"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2688,
+        176
+      ],
+      "id": "eafecac6-1319-4d0e-83b6-a0510bdb8068",
+      "name": "Exportar auditoria JSON"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e7b845b2-14ee-48a0-be05-359fe60393d7",
+              "leftValue": "={{ $json.relatos.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "9deeefcd-e129-4527-ac76-3856ad3d4540",
+      "name": "Há relatos?"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "dados = _items[0][\"json\"]\n\nvalidacoes = []\n\nfor indice, relato in enumerate(dados[\"resultados\"], start=1):\n    validacoes.append({\n        \"item_resultado\": indice,\n        \"status\": relato[\"status\"],\n        \"motivo\": str(relato.get(\"motivo\") or \"\").strip()\n    })\n\nreturn [{\n    \"json\": {\n        \"projeto\": dados[\"projeto\"],\n        \"execucao_id\": dados[\"execucao_id\"],\n        \"registrado_em\": dados[\"gerado_em\"],\n        \"evento\": \"Triagem concluída\",\n        \"resumo\": dados[\"resumo\"],\n        \"validacoes\": validacoes\n    }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        176
+      ],
+      "id": "26c2a234-f4e8-4917-abda-112c91f9cda4",
+      "name": "Gerar auditoria"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a518086d-137b-4edb-a380-618c0e5464a4",
+              "name": "total_recebidos",
+              "value": "={{ $('Dados de entrada').first().json.relatos.length }}",
+              "type": "number"
+            },
+            {
+              "id": "98e62902-ad76-4cfe-82ac-6aa3ccf71306",
+              "name": "resumo_gerado_em",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "47db3144-7727-4f4b-87b3-59f017d5d6f1",
+              "name": "resumo_execucao_id",
+              "value": "={{ String($execution.id) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1792,
+        0
+      ],
+      "id": "1b46a9a1-21e6-4e5d-9883-9249f4cca56f",
+      "name": "Preparar dados do resumo"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "metadados = _items[0][\"json\"]\n\nrecebidos = int(metadados[\"total_recebidos\"])\nexecucao_id = str(metadados[\"resumo_execucao_id\"]).strip()\ngerado_em = str(metadados[\"resumo_gerado_em\"]).strip()\n\nresultados = []\n\nfor item in _items:\n    relato = dict(item[\"json\"])\n\n    relato.pop(\"total_recebidos\", None)\n    relato.pop(\"resumo_gerado_em\", None)\n    relato.pop(\"resumo_execucao_id\", None)\n\n    resultados.append(relato)\n\naguardando_revisao = sum(\n    1 for relato in resultados\n    if relato.get(\"status\") == \"Aguardando revisão humana\"\n)\n\nprecisam_correcao = sum(\n    1 for relato in resultados\n    if relato.get(\"status\") == \"Precisa de correção\"\n)\n\nreturn [{\n    \"json\": {\n        \"projeto\": \"Reencontra\",\n        \"execucao_id\": execucao_id,\n        \"gerado_em\": gerado_em,\n        \"resumo\": {\n            \"recebidos\": recebidos,\n            \"aguardando_revisao\": aguardando_revisao,\n            \"precisam_correcao\": precisam_correcao,\n            \"duplicados_removidos\": recebidos - len(resultados),\n            \"total_resultados\": len(resultados)\n        },\n        \"resultados\": resultados\n    }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        0
+      ],
+      "id": "635b4c8c-9714-45c7-b392-de90bc80aacb",
+      "name": "Consolidar resultados"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5e035d58-4a34-4ed0-95e1-0f40ca8a55aa",
+              "name": "=resumo_gerado_em",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "d94e2615-4fe6-43dc-9b9a-06743856c6b0",
+              "name": "=resumo_execucao_id",
+              "value": "={{ String($execution.id) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        352
+      ],
+      "id": "9338bc6c-8a6d-4ba6-ba24-6d765e1710ed",
+      "name": "Preparar dados do lote vazio"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "dados = _items[0][\"json\"]\n\nreturn [{\n    \"json\": {\n        \"projeto\": \"Reencontra\",\n        \"execucao_id\": str(dados[\"resumo_execucao_id\"]).strip(),\n        \"gerado_em\": dados[\"resumo_gerado_em\"],\n        \"mensagem\": \"Nenhum relato recebido para processamento.\",\n        \"resumo\": {\n            \"recebidos\": 0,\n            \"aguardando_revisao\": 0,\n            \"precisam_correcao\": 0,\n            \"duplicados_removidos\": 0,\n            \"total_resultados\": 0\n        },\n        \"resultados\": []\n    }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        352
+      ],
+      "id": "6cfb6939-0cb8-40d4-bb50-c9946baadcdc",
+      "name": "Gerar resumo do lote vazio"
+    },
+    {
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "758f9ae3-abb8-45a1-8ee0-3a928de7479c",
+      "name": "Painel da triagem",
+      "position": [
+        2464,
+        528
+      ],
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "dados = _items[0][\"json\"]\nresumo = dados[\"resumo\"]\n\ndef linha(tipo, protocolo=\"\", caso=\"\", situacao=\"\", motivo=\"\"):\n    return {\"json\": {\n        \"Tipo\": tipo,\n        \"Protocolo\": protocolo,\n        \"Caso\": caso,\n        \"Situação\": situacao,\n        \"Detalhe\": motivo\n    }}\n\ntotais = (\n    f'{resumo[\"recebidos\"]} recebidos | '\n    f'{resumo[\"aguardando_revisao\"]} para revisão | '\n    f'{resumo[\"precisam_correcao\"]} para correção | '\n    f'{resumo[\"duplicados_removidos\"]} duplicados removidos | '\n    f'{resumo[\"total_resultados\"]} resultados'\n)\nlinhas = [linha(\n    \"Resumo\",\n    situacao=f'Execução {dados[\"execucao_id\"]}',\n    motivo=totais\n)]\n\nfor relato in dados[\"resultados\"]:\n    linhas.append(linha(\n        \"Relato\",\n        protocolo=relato.get(\"protocolo\") or \"—\",\n        caso=relato.get(\"codigo_caso\") or \"—\",\n        situacao=relato[\"status\"],\n        motivo=relato.get(\"motivo\") or \"\"\n    ))\n\nif not dados[\"resultados\"]:\n    linhas.append(linha(\"Aviso\", situacao=\"Lote vazio\",\n                        motivo=dados.get(\"mensagem\", \"Sem relatos para exibir.\")))\n\nreturn linhas"
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Dados de entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados de entrada": {
+      "main": [
+        [
+          {
+            "node": "Há relatos?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separar relatos": {
+      "main": [
+        [
+          {
+            "node": "Validar relato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar relato": {
+      "main": [
+        [
+          {
+            "node": "Remover protocolos duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Marcar para correção",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remover protocolos duplicados": {
+      "main": [
+        [
+          {
+            "node": "Marcar para revisão",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar para revisão": {
+      "main": [
+        [
+          {
+            "node": "Reunir relatos classificados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar para correção": {
+      "main": [
+        [
+          {
+            "node": "Reunir relatos classificados",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Reunir relatos classificados": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados do resumo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Há relatos?": {
+      "main": [
+        [
+          {
+            "node": "Separar relatos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar dados do lote vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar auditoria": {
+      "main": [
+        [
+          {
+            "node": "Exportar auditoria JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar dados do resumo": {
+      "main": [
+        [
+          {
+            "node": "Consolidar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consolidar resultados": {
+      "main": [
+        [
+          {
+            "node": "Exportar resultados JSON",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gerar auditoria",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Painel da triagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar dados do lote vazio": {
+      "main": [
+        [
+          {
+            "node": "Gerar resumo do lote vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar resumo do lote vazio": {
+      "main": [
+        [
+          {
+            "node": "Exportar resultados JSON",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gerar auditoria",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Painel da triagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "QESOxJpuInb6dquA"
+  },
+  "meta": {
+    "instanceId": "24dd009410b71c072faec50f5833658d43cca3337c2f0ec12f88516419ccf508"
+  },
+  "nodeGroups": [],
+  "tags": []
+}
