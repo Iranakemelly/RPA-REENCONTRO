@@ -40,6 +40,12 @@ Para testar o registro de falhas em outra instalação, importe também o fluxo 
 
 A execução 209 demonstrou a integração por arquivo com o painel. A execução 41 demonstrou a limpeza e as decisões da triagem. A falha controlada da execução 127 foi registrada pelo fluxo de erros. Use apenas dados fictícios nas demonstrações e mantenha credenciais e dados pessoais fora do repositório público.
 
+## Fluxos da automação no n8n
+
+- [Triagem organizada](n8n/reencontro_triagem_organizada.json) — fluxo principal de validação e classificação dos relatos.
+- [Demonstração da automação](n8n/reencontro_demonstracao_automacao.json) — fluxo de demonstração da limpeza e classificação dos relatos.
+
+Para executar um fluxo, baixe o arquivo JSON, importe-o no editor do n8n e clique em **Execute**. No nó **Painel da triagem**, abra a aba **Tabela** para conferir o resultado.
 #Links
 
 Repositório da automação
