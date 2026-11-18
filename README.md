@@ -24,7 +24,7 @@ Painel na Vercel. A pessoa responsável seleciona o arquivo de resultado. O Java
 
 O ambiente local usa Docker para executar o n8n e um executor Python externo da mesma versão. O painel usa HTML, CSS e JavaScript.
 
-Como executar
+#Como executar
 
 Inicie o n8n e o executor Python no Docker. Abra o n8n em http://localhost:5678 se estiver usando a porta padrão.
 
@@ -36,7 +36,7 @@ Abra Exportar resultados JSON → Saída → Binário → Download. No painel pu
 
 Para testar o registro de falhas em outra instalação, importe também o fluxo Registro de falhas e selecione-o nas configurações do fluxo principal, no campo Error Workflow.
 
-Evidências e privacidade
+#Evidências e privacidade
 
 A execução 209 demonstrou a integração por arquivo com o painel. A execução 41 demonstrou a limpeza e as decisões da triagem. A falha controlada da execução 127 foi registrada pelo fluxo de erros. Use apenas dados fictícios nas demonstrações e mantenha credenciais e dados pessoais fora do repositório público.
 
