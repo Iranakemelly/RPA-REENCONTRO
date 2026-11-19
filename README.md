@@ -7,7 +7,7 @@ O Reencontro é uma CitizenTech de apoio à busca de pessoas desaparecidas, dese
 
 Irana Kemelly Pereira RM-98593
 
-Lucas Vinicius Candido RM-98480
+Lucas Vinicius Candido RM-98480 
 
 Mariana Melo RM-98121
 
