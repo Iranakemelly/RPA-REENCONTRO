@@ -49,10 +49,8 @@ Para executar um fluxo, baixe o arquivo JSON, importe-o no editor do n8n e cliqu
 
 #Links
 
-Repositório da automação
+Painel de triagem na Vercel[ https://reencontro-citizentech-navy.vercel.app/]
 
-Painel de triagem na Vercel
+Site principal do Reencontro: [https://reencontro-site.vercel.app/]
 
-Site principal do Reencontro
-
-Vídeo demonstrativo: [inserir link após a gravação]
+Vídeo demonstrativo: [https://youtu.be/ZFaiuGo3y5Y]
